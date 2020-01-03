@@ -3,12 +3,9 @@ import numpy as np
 import streamlit as st
 import joblib
 
-
-
-
 # title of your Web Application
 
-#st.markdown(f'<div>', unsafe_allow_html=True)
+#st.markdown(f'<body style="background-color:grey;">', unsafe_allow_html=True)
 st.title('Sales Forecasting')
 
 # describe the Web Application
@@ -34,18 +31,18 @@ newspaper = st.sidebar.slider('Newspaper Advertising Cost', 0, 250, 125)
 
 value = st.sidebar.selectbox("Show Distribution", ["Radio", "TV", "Newspaper"])
 
-if(value == 'TV'):            
-	st.subheader('TV Advertising Cost Distribution')
+if value == 'TV':            
+	label = 'TV Advertising Cost Distribution'
 	hist_values = np.histogram(data.TV, bins=300, range=(0,300))[0]
-	st.bar_chart(hist_values)
-elif(value == 'Newspaper'):             
-	st.subheader('Newspaper Advertising Cost Distribution')
+elif value == 'Newspaper':             
+	label = 'Newspaper Advertising Cost Distribution'
 	hist_values = np.histogram(data.newspaper, bins=300, range=(0,300))[0]
-	st.bar_chart(hist_values)
 else:
-	st.subheader('Radio Advertising Cost Distribution')
+	label = 'Radio Advertising Cost Distribution'
 	hist_values = np.histogram(data.radio, bins=300, range=(0,300))[0]
-	st.bar_chart(hist_values)
+
+st.subheader(label)
+st.bar_chart(hist_values)
 
 # Load saved machine learning model
 saved_model = joblib.load('advertising_model.sav')
